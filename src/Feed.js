@@ -27,15 +27,18 @@ function Feed() {
 
     const sendPost = (e) => {
         e.preventDefault();
-
-        db.collection('posts').add({
-            name: 'Corey Dickerson',
-            discription: 'Test',
-            message: input,
-            photoUrl: '',
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
     };
+
+    db.collection('posts').add({
+        name: 'Corey Dickerson',
+        discription: 'Test',
+        message: input,
+        photoUrl: '',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    setInput("");
+    
 
   return (
     <div className='feed'>
@@ -43,8 +46,8 @@ function Feed() {
             <div className="feedInput">
             <CreateIcon/>
                 <form>
-                    <input value={input} onChange={e => setInput(e.target.value)} type="text"/>
-                    <button onclick= {sendPost} type='submit'>Send</button>
+                    <input value={input} onChange={(e) => setInput(e.target.value)} type="text"/>
+                    <button onclick={sendPost} type='submit'>Send</button>
                 </form>
             </div>
 
@@ -67,12 +70,6 @@ function Feed() {
                 message={message}
                 photoUrl={photoUrl}
             />))}
-
-
-
-            <Post name='Corey Dickerson' discription='This is a test' message='Wow'/>
-        
-      
     </div>
   )
 }
