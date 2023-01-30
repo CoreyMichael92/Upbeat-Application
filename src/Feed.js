@@ -9,11 +9,14 @@ import InputOption from './InputOption';
 import './CSS/Feed.css';
 import { db, auth } from './firebase';
 import firebase from 'firebase';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
 
 
 function Feed() {
     const [input, setInput] = useState("");
     const [posts, setPosts] = useState ([]);
+    const user = useSelector(selectUser);
     
     useEffect (() => {
         db.collection("posts").onSnapshot((snapshot) => 
@@ -30,10 +33,10 @@ function Feed() {
     };
 
     db.collection('posts').add({
-        name: 'Corey Dickerson',
-        discription: 'Test',
+        name: user.displayName,
+        discription: user.email,
         message: input,
-        photoUrl: '',
+        photoUrl: user.photoUrl || "",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
